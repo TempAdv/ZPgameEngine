@@ -1,11 +1,29 @@
 
 import pygame
-
+import random
 
 def main():
-	colors = {0:'#A0A000'
+	colors = {0:'#202000',
+		   1:'#A0A000'
 
 	}
+
+	def passFun(x,y):
+		pass
+
+	def disappear(x,y):
+		pass
+		#row = cells[y]
+		#row[x] = random.randint(0,1)
+
+
+
+
+	updateFunctions = {
+		0:passFun,
+		1:disappear
+		}
+
 
 	SandboxXSize = 50
 	SandboxYSize = 50
@@ -35,17 +53,33 @@ def main():
 
 			x = 0
 			for cell in i:
-
+				function = updateFunctions[cell]
+				function(x,y)
 				pygame.draw.rect(win, colors[cell], pygame.Rect(9*x+1, 9*y+1, 8, 8))
 
-				x+= 1
+				x += 1
 			y += 1
 
 		for event in pygame.event.get():
+			if event.type == pygame.KEYDOWN:
+				mouse_pos = pygame.mouse.get_pos()
+				mouse_pos_x, mouse_pos_y = mouse_pos
+
+				if mouse_pos_x> 0 and mouse_pos_x < WindowXSize and mouse_pos_y> 0 and mouse_pos_y < WindowYSize:
+					mouse_cell_x = (mouse_pos_x - 1) // 9
+					mouse_cell_y = (mouse_pos_y - 1) // 9
+					row = cells[mouse_cell_y]
+					
+					if event.key == pygame.K_1:
+						row[mouse_cell_x] = 1
+
+					if event.key == pygame.K_0:
+						row[mouse_cell_x] = 0
+					
 			if event.type == pygame.QUIT:
 				run = False
 
-		clock.tick(50)
+		clock.tick(20)
 
 		pygame.display.flip()
 
