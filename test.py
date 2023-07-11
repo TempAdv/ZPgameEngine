@@ -2,12 +2,15 @@ from ZP import *
 
 colors = {1:'#202000',
           2:'#A0A000',
-		  3:'#101010'}
+		  3:'#101010',
+		  4:'#A01010'}
 
 
 
 def passFun(cells, cellsBuffer, x,y):
-	pass
+	neighbours = count8(cells,x,y,4)
+	if neighbours == 3:
+		cellsBuffer[y][x] = 4
 
 def builder(cells, cellsBuffer, x,y):
 	if y > 0 and y < 49:
@@ -31,16 +34,17 @@ def builder(cells, cellsBuffer, x,y):
 def block(cells, cellsBuffer, x,y):
 	pass
 
-def rightBuild(cells, cellsBuffer, x,y):
-	pass
-	#row = cells[y]
-	#row[x] = random.randint(0,1)
+def duplicat(cells, cellsBuffer, x,y):
+
+	neighbours = count8(cells,x,y,4)
+	if neighbours != 3 and neighbours != 2:
+		cellsBuffer[y][x] = 1
 
 updateFunctions = {
 	1:passFun,
 	2:builder,
 	3:block,
-	4:rightBuild
+	4:duplicat
 	}
 
 main(colors,updateFunctions)

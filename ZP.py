@@ -1,6 +1,61 @@
 
+from pickle import TRUE
 import pygame
-import random
+
+def count8(cells,x,y,cell):
+	#yeah this part is monstrosity
+	neighbours = 0
+	try:
+		if cells[y-1][x-1] == cell:
+			neighbours += 1 
+	except:
+		pass
+
+	try:
+		if cells[y][x-1] == cell:
+			neighbours += 1 
+	except:
+		pass
+
+	try:
+		if cells[y+1][x-1] == cell:
+			neighbours += 1 
+	except:
+		pass
+
+	try:
+		if cells[y-1][x] == cell:
+			neighbours += 1 
+	except:
+		pass
+
+	try:
+		if cells[y+1][x] == cell:
+			neighbours += 1 
+	except:
+		pass
+
+	try:
+		if cells[y-1][x+1] == cell:
+			neighbours += 1 
+	except:
+		pass
+
+	try:
+		if cells[y][x+1] == cell:
+			neighbours += 1 
+	except:
+		pass
+
+	try:
+		if cells[y+1][x+1] == cell:
+			neighbours += 1 
+	except:
+		pass
+	
+	return neighbours
+
+
 
 def main(colors,updateFunctions):
 
@@ -12,6 +67,7 @@ def main(colors,updateFunctions):
 	WindowXSize = 451
 	WindowYSize = 451
 	
+	paused = False
 	cells = []
 	cellsBuffer = []
 
@@ -37,8 +93,9 @@ def main(colors,updateFunctions):
 
 			x = 0
 			for cell in i:
-				function = updateFunctions[cell]
-				function(cells, cellsBuffer, x,y)
+				if paused == False:
+					function = updateFunctions[cell]
+					function(cells, cellsBuffer, x,y)
 				pygame.draw.rect(win, colors[cell], pygame.Rect(9*x+1, 9*y+1, 8, 8))
 
 				x += 1
@@ -52,6 +109,11 @@ def main(colors,updateFunctions):
 
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
+
+				if event.key == pygame.K_p:
+					if paused == False: paused = True
+					else: paused = False
+
 				mouse_pos = pygame.mouse.get_pos()
 				mouse_pos_x, mouse_pos_y = mouse_pos
 
@@ -60,6 +122,8 @@ def main(colors,updateFunctions):
 					mouse_cell_y = (mouse_pos_y - 1) // 9
 					row = cellsBuffer[mouse_cell_y]
 					
+					# lil monstrosity
+
 					if event.key == pygame.K_1:
 						row[mouse_cell_x] = 1
 
