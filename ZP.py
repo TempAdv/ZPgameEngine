@@ -2,6 +2,8 @@
 from pickle import TRUE
 import pygame
 
+
+#function to count how many other cells of some color cell have in nearest 8 one
 def count8(cells,x,y,cell):
 	#yeah this part is monstrosity
 	neighbours = 0
@@ -59,11 +61,15 @@ def count8(cells,x,y,cell):
 
 def main(colors,updateFunctions):
 
+	#colors - dictionary of numbers and colors wich represents them
+	#updateFunctions - dictionary of numbers and functions wich will be called when updater checks a cell with this color
 
+
+	# size of cells grid
 	SandboxXSize = 50
 	SandboxYSize = 50
 	
-
+	# size of window
 	WindowXSize = 451
 	WindowYSize = 451
 	
@@ -72,10 +78,15 @@ def main(colors,updateFunctions):
 	UTC = 1
 	UTCmax = 10
 
+	# -1 - None
 	activeColor = -1
 	paused = False
+
+	
 	cells = []
 	cellsBuffer = []
+
+	#creating grid of cells and buffer of its
 
 	for i in range(SandboxYSize):
 		cells.append([])
@@ -92,6 +103,10 @@ def main(colors,updateFunctions):
 
 	clock = pygame.time.Clock()
 	run = True
+
+	#updater calls function for every cell in cells but this functions change Buffer. When updater done with all cells
+	#it will put result from buffer to 'cells'
+
 	while(run):
 
 		UTC += 1
@@ -175,7 +190,7 @@ def main(colors,updateFunctions):
 			if event.type == pygame.QUIT:
 				run = False
 
-		clock.tick(600)
+		clock.tick(60)
 
 		pygame.display.flip()
 
