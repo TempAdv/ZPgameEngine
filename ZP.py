@@ -158,7 +158,7 @@ def main(colors,updateFunctions):
 					if paused == False: paused = True
 					else: paused = False
 
-				if event.key == pygame.K_MINUS:
+				if event.key == pygame.K_MINUS and UTCmax > 1:
 					UTCmax -= 1
 
 				if event.key == pygame.K_EQUALS:
