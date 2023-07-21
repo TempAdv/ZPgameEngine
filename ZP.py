@@ -77,9 +77,8 @@ def main(colors,updateFunctions):
 	# functions not in every frame
 	UTC = 1
 	UTCmax = 10
-
-	# -1 - None
-	activeColor = -1
+	
+	activeColor = 1
 	paused = False
 
 	
@@ -125,6 +124,9 @@ def main(colors,updateFunctions):
 				x += 1
 			y += 1
 		
+		#panel things
+
+		#pause indicator
 		pygame.draw.rect(win, '#000000', pygame.Rect(3, 3, 30, 30))
 		if paused:
 			
@@ -133,6 +135,9 @@ def main(colors,updateFunctions):
 		else:
 			pygame.draw.polygon(win, '#FFFFFF', ((9, 4),(23, 18),(9, 32)))
 			pass
+
+		#active color indicator
+		pygame.draw.rect(win, colors[activeColor], pygame.Rect(40, 4, 28, 28))
 		
 		if UTC >= UTCmax:
 			UTC = 0
