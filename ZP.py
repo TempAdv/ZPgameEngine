@@ -71,7 +71,7 @@ def main(colors,updateFunctions):
 	
 	# size of window
 	WindowXSize = 451
-	WindowYSize = 451
+	WindowYSize = 487
 	
 	# UTC - updateTimerCount. It grows until equals to UTCmax then UTC equals to 1 again. This 2 vars needed to call cells 
 	# functions not in every frame
@@ -116,15 +116,24 @@ def main(colors,updateFunctions):
 
 			x = 0
 			for cell in i:
-				if paused == False and UTC == UTCmax:
+				if not paused and UTC == UTCmax:
 
 					function = updateFunctions[cell]
 					function(cells, cellsBuffer, x,y)
-				pygame.draw.rect(win, colors[cell], pygame.Rect(9*x+1, 9*y+1, 8, 8))
+				pygame.draw.rect(win, colors[cell], pygame.Rect(9*x+1, 9*y+37, 8, 8))
 
 				x += 1
 			y += 1
-
+		
+		pygame.draw.rect(win, '#000000', pygame.Rect(3, 3, 30, 30))
+		if paused:
+			
+			pygame.draw.rect(win, '#FFFFFF', pygame.Rect(5, 4, 10, 28))
+			pygame.draw.rect(win, '#FFFFFF', pygame.Rect(19, 4, 10, 28))
+		else:
+			pygame.draw.polygon(win, '#FFFFFF', ((9, 4),(23, 18),(9, 32)))
+			pass
+		
 		if UTC >= UTCmax:
 			UTC = 0
 
@@ -138,9 +147,9 @@ def main(colors,updateFunctions):
 
 			if pygame.mouse.get_pressed()[0] and activeColor!= -1:
 				mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
-				if mouse_pos_x > 0 and mouse_pos_x < WindowXSize and mouse_pos_y> 0 and mouse_pos_y < WindowYSize:
+				if mouse_pos_x > 0 and mouse_pos_x < WindowXSize and mouse_pos_y> 36 and mouse_pos_y < WindowYSize:
 					mouse_cell_x = (mouse_pos_x - 1) // 9
-					mouse_cell_y = (mouse_pos_y - 1) // 9
+					mouse_cell_y = (mouse_pos_y - 37) // 9
 					cellsBuffer[mouse_cell_y][mouse_cell_x] = activeColor
 
 			if event.type == pygame.KEYDOWN:
